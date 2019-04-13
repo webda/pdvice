@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserRegListMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		user_reg_list
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+			id,uid,createdate,adminid,adminmobile,state,reason,applydate,applyuid
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	
+	 #{id}, #{uid}, #{createdate}, #{adminid}, #{adminmobile}, #{state}, #{reason}, #{applydate}, #{applyuid}
+	
+	</sql>
+ 
+
+	<!-- 列出所有content.entity.className -->
+	<select id="listAllUserRegList" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+	</select> 
+		<select id="SelectUserRegLists" parameterType="pd" resultType="com.fh.entity.app.UserRegList">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="uid != null"> and uid = #{uid}</if>
+		<if test="createdate != null"> and createdate = #{createdate}</if>
+		<if test="adminid != null"> and adminid = #{adminid}</if>
+		<if test="adminmobile != null"> and adminmobile = #{adminmobile}</if>
+		<if test="state != null"> and state = #{state}</if>
+		<if test="reason != null"> and reason = #{reason}</if>
+		<if test="applydate != null"> and applydate = #{applydate}</if>
+		<if test="applyuid != null"> and applyuid = #{applyuid}</if>
+	</select> 
+	
+	<select id="SelectUserRegListAndUser" parameterType="pd" resultType="com.fh.entity.app.UserRegListAndUser">
+		SELECT  uid,createdate,adminid,adminmobile,user_reg_list.state,user_reg_list.id,reason,applydate,applyuid,
+a.name,a.realname,a.mobile,a.email,b.`name` as adminname FROM `user_reg_list`
+left join users a on a.id=user_reg_list.uid
+left join users B on B.id=user_reg_list.adminid
+			where 1=1 
+		<if test="uid != null"> and uid = #{uid}</if>
+		<if test="createdate != null"> and createdate = #{createdate}</if>
+		<if test="adminid != null"> and adminid = #{adminid}</if>
+		<if test="adminmobile != null"> and adminmobile = #{adminmobile}</if>
+		<if test="state != null"> and user_reg_list.state = #{state}</if>
+		<if test="reason != null"> and reason = #{reason}</if>
+		<if test="applydate != null"> and applydate = #{applydate}</if>
+		<if test="applyuid != null"> and applyuid = #{applyuid}</if>
+	</select> 
+	
+	<select id="queryUserRegList" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="uid != null"> and uid = #{uid}</if>
+		<if test="createdate != null"> and createdate = #{createdate}</if>
+		<if test="adminid != null"> and adminid = #{adminid}</if>
+		<if test="adminmobile != null"> and adminmobile = #{adminmobile}</if>
+		<if test="state != null"> and state = #{state}</if>
+		<if test="reason != null"> and reason = #{reason}</if>
+		<if test="applydate != null"> and applydate = #{applydate}</if>
+		<if test="applyuid != null"> and applyuid = #{applyuid}</if>
+	</select> 
+	
+	<!-- 新增会员 -->
+	<insert id="saveUserRegList" parameterType="pd">
+		insert into
+		<include refid="tableName"></include>
+		(
+		uid,createdate,adminid,adminmobile,state,reason,applydate,applyuid
+		) values (
+		 #{uid}, #{createdate}, #{adminid}, #{adminmobile}, #{state}, #{reason}, #{applydate}, #{applyuid}
+		)
+	</insert>
+
+	<!-- 删除用户 -->
+	<delete id="deleteUserRegList" parameterType="pd">
+		delete from
+		<include refid="tableName"></include> 
+		where  id  =  #{id}
+	</delete>
+ 
+ 
+
+
+
+
+	<!-- 修改 -->
+	<update id="editUserRegList" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+	uid=#{uid},
+	createdate=#{createdate},
+	adminid=#{adminid},
+	adminmobile=#{adminmobile},
+	state=#{state},
+	reason=#{reason},
+	applydate=#{applydate},
+	applyuid=#{applyuid}
+		where
+		 id  =  #{id}
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findByUiId" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		 id  =  #{id}
+	</select>
+ 
+
+	<!-- 批量删除用户 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where
+		 id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 获取总数 -->
+	<select id="getUserRegListCount" parameterType="String" resultType="pd">
+		select
+		count(1) UserRegListCount
+		from
+		<include refid="tableName"></include>
+	</select>
+
+	<!-- FH HFTC( HFTC) -->
+</mapper>

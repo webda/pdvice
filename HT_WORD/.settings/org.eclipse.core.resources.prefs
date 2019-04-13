@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+encoding//WebContent/WEB-INF/jsp/company/company_list.jsp=UTF-8
+encoding//WebContent/WEB-INF/jsp/system/index/head.jsp=UTF-8
+encoding//WebContent/WEB-INF/jsp/system/index/left.jsp=UTF-8
+encoding//WebContent/WEB-INF/jsp/system/index/login.jsp=UTF-8
+encoding//WebContent/WEB-INF/jsp/system/index/top.jsp=UTF-8
+encoding//resources/dbfh.properties=UTF-8
+encoding//resources/mybatis1/system/AppuserMapper.xml=UTF-8
+encoding/<project>=UTF-8

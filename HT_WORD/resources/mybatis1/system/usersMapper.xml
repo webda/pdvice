@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="usersMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		users
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		id,
+		cid,
+		pid,
+		name,
+		pwd,
+		realname,
+		mobile,
+		email,
+		lastlogin,
+		state,
+		usertype,
+		isdel,
+		isneedchgpwd
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{id},
+		#{cid},
+		#{pid},
+		#{name},
+		#{pwd},
+		#{realname},
+		#{mobile},
+		#{email},
+		#{lastlogin},
+		#{state},
+		#{usertype},
+		#{isdel},
+		#{isneedchgpwd}
+	</sql>
+
+
+	<!-- 列出某角色下的所有会员 -->
+	<select id="listAllusersByRorlid" parameterType="pd" resultType="pd">
+		select
+		id
+		from
+		<include refid="tableName"></include>
+		where
+		usertype = #{usertype}
+	</select>
+
+
+	
+
+
+	<!-- 判断用户名和密码 -->
+	<select id="getUserInfo" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="name!=null and pwd!=null">
+			and name = #{name} and pwd=#{pwd}
+		</if>
+		
+	</select>
+
+
+
+
+
+
+
+	<!-- 新增会员 -->
+	<insert id="saveU" parameterType="pd">
+		insert into
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>
+		)
+	</insert>
+
+	<!-- 删除用户 -->
+	<delete id="deleteU" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where
+		USER_ID = #{USER_ID}
+	</delete>
+
+ 
+
+
+
+
+	<!-- 修改 -->
+	<update id="editU" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+		name=#{name}, 
+		realname=#{realname},
+		mobile=#{mobile},
+		email=#{email},
+		lastlogin=#{lastlogin},
+		state=#{state},
+		usertype=#{usertype} 
+		<if test="pwd != null and pwd != ''">
+			,pwd = #{pwd}
+		</if>
+		where
+		USER_ID = #{USER_ID}
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findByUiId" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		USER_ID = #{USER_ID}
+	</select>
+ 
+
+	<!-- 批量删除用户 -->
+	<delete id="deleteAllU" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where
+		USER_ID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 获取总数 -->
+	<select id="getusersCount" parameterType="String" resultType="pd">
+		select
+		count(1) usersCount
+		from
+		<include refid="tableName"></include>
+	</select>
+
+	<!-- FH HFTC( HFTC) -->
+</mapper>

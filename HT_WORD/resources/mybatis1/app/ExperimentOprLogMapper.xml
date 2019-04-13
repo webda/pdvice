@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ExperimentOprLogMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		experiment_opr_log
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+			id,eid,pid,uid,content,oprdate
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	
+	 #{id}, #{eid}, #{pid}, #{uid}, #{content}, #{oprdate}
+	
+	</sql>
+ 
+
+	<!-- 列出所有content.entity.className -->
+	<select id="listAllExperimentOprLog" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+	</select> 
+		<select id="SelectExperimentOprLogs" parameterType="pd" resultType="com.fh.entity.app.ExperimentOprLog">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="eid != null"> and eid = #{eid}</if>
+		<if test="pid != null"> and pid = #{pid}</if>
+		<if test="uid != null"> and uid = #{uid}</if>
+		<if test="content != null"> and content = #{content}</if>
+		<if test="oprdate != null"> and oprdate = #{oprdate}</if>
+	</select> 
+	<select id="queryExperimentOprLog" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="eid != null"> and eid = #{eid}</if>
+		<if test="pid != null"> and pid = #{pid}</if>
+		<if test="uid != null"> and uid = #{uid}</if>
+		<if test="content != null"> and content = #{content}</if>
+		<if test="oprdate != null"> and oprdate = #{oprdate}</if>
+	</select> 
+	
+	<!-- 新增会员 -->
+	<insert id="saveExperimentOprLog" parameterType="pd">
+		insert into
+		<include refid="tableName"></include>
+		(
+		eid,pid,uid,content,oprdate
+		) values (
+		 #{eid}, #{pid}, #{uid}, #{content}, #{oprdate}
+		)
+	</insert>
+
+	<!-- 删除用户 -->
+	<delete id="deleteExperimentOprLog" parameterType="pd">
+		delete from
+		<include refid="tableName"></include> 
+		where  id  =  #{id}
+	</delete>
+ 
+ 
+
+
+
+
+	<!-- 修改 -->
+	<update id="editExperimentOprLog" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+	eid=#{eid},
+	pid=#{pid},
+	uid=#{uid},
+	content=#{content},
+	oprdate=#{oprdate}
+		where
+		 id  =  #{id}
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findByUiId" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		 id  =  #{id}
+	</select>
+ 
+
+	<!-- 批量删除用户 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where
+		 id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 获取总数 -->
+	<select id="getExperimentOprLogCount" parameterType="String" resultType="pd">
+		select
+		count(1) ExperimentOprLogCount
+		from
+		<include refid="tableName"></include>
+	</select>
+
+	<!-- FH HFTC( HFTC) -->
+</mapper>

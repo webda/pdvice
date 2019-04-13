@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DeviceMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		device
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+			id,name,sn,producer,buydate,duedate,type,owner,creator,createdate,img,Origin
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	
+	 #{id}, #{name}, #{sn}, #{producer}, #{buydate}, #{duedate}, #{type}, #{owner}, #{creator}, #{createdate}, #{img}, #{Origin}
+	
+	</sql>
+ 
+
+	<!-- 列出所有content.entity.className -->
+	<select id="listAllDevice" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+	</select> 
+		<select id="SelectDevices" parameterType="pd" resultType="com.fh.entity.app.Device">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="name != null"> and name = #{name}</if>
+		<if test="sn != null"> and sn = #{sn}</if>
+		<if test="producer != null"> and producer = #{producer}</if>
+		<if test="buydate != null"> and buydate = #{buydate}</if>
+		<if test="duedate != null"> and duedate = #{duedate}</if>
+		<if test="type != null"> and type = #{type}</if>
+		<if test="owner != null"> and owner = #{owner}</if>
+		<if test="creator != null"> and creator = #{creator}</if>
+		<if test="createdate != null"> and createdate = #{createdate}</if>
+		<if test="img != null"> and img = #{img}</if>
+		<if test="origin != null"> and Origin = #{origin}</if>
+	</select> 
+	<select id="queryDevice" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="name != null"> and name = #{name}</if>
+		<if test="sn != null"> and sn = #{sn}</if>
+		<if test="producer != null"> and producer = #{producer}</if>
+		<if test="buydate != null"> and buydate = #{buydate}</if>
+		<if test="duedate != null"> and duedate = #{duedate}</if>
+		<if test="type != null"> and type = #{type}</if>
+		<if test="owner != null"> and owner = #{owner}</if>
+		<if test="creator != null"> and creator = #{creator}</if>
+		<if test="createdate != null"> and createdate = #{createdate}</if>
+		<if test="img != null"> and img = #{img}</if>
+		<if test="origin != null"> and Origin = #{origin}</if>
+	</select> 
+	
+	<!-- 新增会员 -->
+	<insert id="saveDevice" parameterType="pd"  useGeneratedKeys="true" keyProperty="id">
+		insert into
+		<include refid="tableName"></include>
+		(
+		name,sn,producer,buydate,duedate,type,owner,creator,createdate,img,Origin
+		) values (
+		 #{name}, #{sn}, #{producer}, #{buydate}, #{duedate}, #{type}, #{owner}, #{creator}, #{createdate}, #{img}, #{Origin}
+		)
+	</insert>
+
+	<!-- 删除用户 -->
+	<delete id="deleteDevice" parameterType="pd">
+		delete from
+		<include refid="tableName"></include> 
+		where  id  =  #{id}
+	</delete>
+ 
+ 
+
+
+
+
+	<!-- 修改 -->
+	<update id="editDevice" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+	name=#{name},
+	sn=#{sn},
+	producer=#{producer},
+	buydate=#{buydate},
+	duedate=#{duedate},
+	type=#{type},
+	owner=#{owner},
+	creator=#{creator},
+	createdate=#{createdate},
+	img=#{img},
+	Origin=#{Origin}
+		where
+		 id  =  #{id}
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findByUiId" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		 id  =  #{id}
+	</select>
+ 
+
+	<!-- 批量删除用户 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where
+		 id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 获取总数 -->
+	<select id="getDeviceCount" parameterType="String" resultType="pd">
+		select
+		count(1) DeviceCount
+		from
+		<include refid="tableName"></include>
+	</select>
+
+	<!-- FH HFTC( HFTC) -->
+</mapper>

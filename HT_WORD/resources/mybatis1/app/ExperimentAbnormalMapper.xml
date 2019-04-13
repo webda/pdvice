@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ExperimentAbnormalMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		experiment_abnormal
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+			id,eid,pid,minid,maxid,val,nextreminddate,residueremindtime,totaltime,state,isremindadmin
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	
+	 #{id}, #{eid}, #{pid}, #{minid}, #{maxid}, #{val}, #{nextreminddate}, #{residueremindtime}, #{totaltime}, #{state}, #{isremindadmin}
+	
+	</sql>
+ 
+
+	<!-- 列出所有content.entity.className -->
+	<select id="listAllExperimentAbnormal" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+	</select> 
+		<select id="SelectExperimentAbnormals" parameterType="pd" resultType="com.fh.entity.app.ExperimentAbnormal">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="eid != null"> and eid = #{eid}</if>
+		<if test="pid != null"> and pid = #{pid}</if>
+		<if test="minid != null"> and minid = #{minid}</if>
+		<if test="maxid != null"> and maxid = #{maxid}</if>
+		<if test="val != null"> and val = #{val}</if>
+		<if test="nextreminddate != null"> and nextreminddate = #{nextreminddate}</if>
+		<if test="residueremindtime != null"> and residueremindtime = #{residueremindtime}</if>
+		<if test="totaltime != null"> and totaltime = #{totaltime}</if>
+		<if test="state != null"> and state = #{state}</if>
+		<if test="isremindadmin != null"> and isremindadmin = #{isremindadmin}</if>
+	</select> 
+	<select id="queryExperimentAbnormal" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="eid != null"> and eid = #{eid}</if>
+		<if test="pid != null"> and pid = #{pid}</if>
+		<if test="minid != null"> and minid = #{minid}</if>
+		<if test="maxid != null"> and maxid = #{maxid}</if>
+		<if test="val != null"> and val = #{val}</if>
+		<if test="nextreminddate != null"> and nextreminddate = #{nextreminddate}</if>
+		<if test="residueremindtime != null"> and residueremindtime = #{residueremindtime}</if>
+		<if test="totaltime != null"> and totaltime = #{totaltime}</if>
+		<if test="state != null"> and state = #{state}</if>
+		<if test="isremindadmin != null"> and isremindadmin = #{isremindadmin}</if>
+	</select> 
+	
+	<!-- 新增会员 -->
+	<insert id="saveExperimentAbnormal" parameterType="pd">
+		insert into
+		<include refid="tableName"></include>
+		(
+		eid,pid,minid,maxid,val,nextreminddate,residueremindtime,totaltime,state,isremindadmin
+		) values (
+		 #{eid}, #{pid}, #{minid}, #{maxid}, #{val}, #{nextreminddate}, #{residueremindtime}, #{totaltime}, #{state}, #{isremindadmin}
+		)
+	</insert>
+
+	<!-- 删除用户 -->
+	<delete id="deleteExperimentAbnormal" parameterType="pd">
+		delete from
+		<include refid="tableName"></include> 
+		where  id  =  #{id}
+	</delete>
+ 
+ 
+
+
+
+
+	<!-- 修改 -->
+	<update id="editExperimentAbnormal" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+	eid=#{eid},
+	pid=#{pid},
+	minid=#{minid},
+	maxid=#{maxid},
+	val=#{val},
+	nextreminddate=#{nextreminddate},
+	residueremindtime=#{residueremindtime},
+	totaltime=#{totaltime},
+	state=#{state},
+	isremindadmin=#{isremindadmin}
+		where
+		 id  =  #{id}
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findByUiId" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		 id  =  #{id}
+	</select>
+ 
+
+	<!-- 批量删除用户 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where
+		 id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 获取总数 -->
+	<select id="getExperimentAbnormalCount" parameterType="String" resultType="pd">
+		select
+		count(1) ExperimentAbnormalCount
+		from
+		<include refid="tableName"></include>
+	</select>
+
+	<!-- FH HFTC( HFTC) -->
+</mapper>

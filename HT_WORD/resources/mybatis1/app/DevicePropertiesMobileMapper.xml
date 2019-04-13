@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DevicePropertiesMobileMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		device_properties_mobile
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+			id,did,pid,minval,maxval
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	
+	 #{id}, #{did}, #{pid}, #{minval}, #{maxval}
+	
+	</sql>
+ 
+
+	<!-- 列出所有content.entity.className -->
+	<select id="listAllDevicePropertiesMobile" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+	</select> 
+		<select id="SelectDevicePropertiesMobiles" parameterType="pd" resultType="com.fh.entity.app.DevicePropertiesMobile">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="did != null"> and did = #{did}</if>
+		<if test="pid != null"> and pid = #{pid}</if>
+		<if test="minval != null"> and minval = #{minval}</if>
+		<if test="maxval != null"> and maxval = #{maxval}</if>
+	</select> 
+	<select id="queryDevicePropertiesMobile" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="did != null"> and did = #{did}</if>
+		<if test="pid != null"> and pid = #{pid}</if>
+		<if test="minval != null"> and minval = #{minval}</if>
+		<if test="maxval != null"> and maxval = #{maxval}</if>
+	</select> 
+	
+	<!-- 新增会员 -->
+	<insert id="saveDevicePropertiesMobile" parameterType="pd">
+		insert into
+		<include refid="tableName"></include>
+		(
+		did,pid,minval,maxval
+		) values (
+		 #{did}, #{pid}, #{minval}, #{maxval}
+		)
+	</insert>
+
+	<!-- 删除用户 -->
+	<delete id="deleteDevicePropertiesMobile" parameterType="pd">
+		delete from
+		<include refid="tableName"></include> 
+		where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="did != null"> and did = #{did}</if>
+		<if test="pid != null"> and pid = #{pid}</if>
+		<if test="minval != null"> and minval = #{minval}</if>
+		<if test="maxval != null"> and maxval = #{maxval}</if>
+	</delete>
+ 
+ 
+
+
+
+
+	<!-- 修改 -->
+	<update id="editDevicePropertiesMobile" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+	did=#{did},
+	pid=#{pid},
+	minval=#{minval},
+	maxval=#{maxval}
+		where
+		 id  =  #{id}
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findByUiId" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		 id  =  #{id}
+	</select>
+ 
+
+	<!-- 批量删除用户 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where
+		 id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 获取总数 -->
+	<select id="getDevicePropertiesMobileCount" parameterType="String" resultType="pd">
+		select
+		count(1) DevicePropertiesMobileCount
+		from
+		<include refid="tableName"></include>
+	</select>
+
+	<!-- FH HFTC( HFTC) -->
+</mapper>

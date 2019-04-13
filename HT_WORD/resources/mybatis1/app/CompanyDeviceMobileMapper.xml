@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CompanyDeviceMobileMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		company_device_mobile
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+			id,did,cid,createor,createdate,remind,`interval`,handle,remindadmin,state
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	
+	 #{id}, #{did}, #{cid}, #{createor}, #{createdate}, #{remind}, #{interval}, #{handle}, #{remindadmin}, #{state}
+	
+	</sql>
+ 
+
+	<!-- 列出所有content.entity.className -->
+	<select id="listAllCompanyDeviceMobile" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+	</select> 
+		<select id="SelectCompanyDeviceMobiles" parameterType="pd" resultType="com.fh.entity.app.CompanyDeviceMobile">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="did != null"> and did = #{did}</if>
+		<if test="cid != null"> and cid = #{cid}</if>
+		<if test="createor != null"> and createor = #{createor}</if>
+		<if test="createdate != null"> and createdate = #{createdate}</if>
+		<if test="remind != null"> and remind = #{remind}</if>
+		<if test="interval != null"> and `interval` = #{interval}</if>
+		<if test="handle != null"> and handle = #{handle}</if>
+		<if test="remindadmin != null"> and remindadmin = #{remindadmin}</if>
+		<if test="state != null"> and state = #{state}</if>
+	</select> 
+	<select id="queryCompanyDeviceMobile" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="did != null"> and did = #{did}</if>
+		<if test="cid != null"> and cid = #{cid}</if>
+		<if test="createor != null"> and createor = #{createor}</if>
+		<if test="createdate != null"> and createdate = #{createdate}</if>
+		<if test="remind != null"> and remind = #{remind}</if>
+		<if test="interval != null"> and `interval` = #{interval}</if>
+		<if test="handle != null"> and handle = #{handle}</if>
+		<if test="remindadmin != null"> and remindadmin = #{remindadmin}</if>
+		<if test="state != null"> and state = #{state}</if>
+	</select> 
+	
+	<!-- 新增会员 -->
+	<insert id="saveCompanyDeviceMobile" parameterType="pd">
+		insert into
+		<include refid="tableName"></include>
+		(
+		did,cid,createor,createdate,remind,`interval`,handle,remindadmin,state
+		) values (
+		 #{did}, #{cid}, #{createor}, #{createdate}, #{remind}, #{interval}, #{handle}, #{remindadmin}, #{state}
+		)
+	</insert>
+
+	<!-- 删除用户 -->
+	<delete id="deleteCompanyDeviceMobile" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>  
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="did != null"> and did = #{did}</if>
+		<if test="cid != null"> and cid = #{cid}</if>
+		<if test="createor != null"> and createor = #{createor}</if>
+		<if test="createdate != null"> and createdate = #{createdate}</if>
+		<if test="remind != null"> and remind = #{remind}</if>
+		<if test="interval != null"> and `interval` = #{interval}</if>
+		<if test="handle != null"> and handle = #{handle}</if>
+		<if test="remindadmin != null"> and remindadmin = #{remindadmin}</if>
+		<if test="state != null"> and state = #{state}</if>
+	</delete>
+ 
+ 
+
+
+
+
+	<!-- 修改 -->
+	<update id="editCompanyDeviceMobile" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+	did=#{did},
+	cid=#{cid},
+	createor=#{createor},
+	createdate=#{createdate},
+	remind=#{remind},
+	`interval`=#{interval},
+	handle=#{handle},
+	remindadmin=#{remindadmin},
+	state=#{state}
+		where
+		 id  =  #{id}
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findByUiId" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		 id  =  #{id}
+	</select>
+ 
+
+	<!-- 批量删除用户 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where
+		 id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 获取总数 -->
+	<select id="getCompanyDeviceMobileCount" parameterType="String" resultType="pd">
+		select
+		count(1) CompanyDeviceMobileCount
+		from
+		<include refid="tableName"></include>
+	</select>
+
+	<!-- FH HFTC( HFTC) -->
+</mapper>

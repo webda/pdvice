@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ExperimentPpValMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		experiment_pp_val
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+			id,eid,pid,val,curdate,isabn
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	
+	 #{id}, #{eid}, #{pid}, #{val}, #{curdate}, #{isabn}
+	
+	</sql>
+ 
+
+	<!-- 列出所有content.entity.className -->
+	<select id="listAllExperimentPpVal" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+	</select> 
+		<select id="SelectExperimentPpVals" parameterType="pd" resultType="com.fh.entity.app.ExperimentPpVal">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="eid != null"> and eid = #{eid}</if>
+		<if test="pid != null"> and pid = #{pid}</if>
+		<if test="val != null"> and val = #{val}</if>
+		<if test="curdate != null"> and curdate = #{curdate}</if>
+		<if test="isabn != null"> and isabn = #{isabn}</if>
+	</select> 
+	<select id="queryExperimentPpVal" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="eid != null"> and eid = #{eid}</if>
+		<if test="pid != null"> and pid = #{pid}</if>
+		<if test="val != null"> and val = #{val}</if>
+		<if test="curdate != null"> and curdate = #{curdate}</if>
+		<if test="isabn != null"> and isabn = #{isabn}</if>
+	</select> 
+	
+	<!-- 新增会员 -->
+	<insert id="saveExperimentPpVal" parameterType="pd">
+		insert into
+		<include refid="tableName"></include>
+		(
+		eid,pid,val,curdate,isabn
+		) values (
+		 #{eid}, #{pid}, #{val}, #{curdate}, #{isabn}
+		)
+	</insert>
+
+	<!-- 删除用户 -->
+	<delete id="deleteExperimentPpVal" parameterType="pd">
+		delete from
+		<include refid="tableName"></include> 
+		where  id  =  #{id}
+	</delete>
+ 
+ 
+
+
+
+
+	<!-- 修改 -->
+	<update id="editExperimentPpVal" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+	eid=#{eid},
+	pid=#{pid},
+	val=#{val},
+	curdate=#{curdate},
+	isabn=#{isabn}
+		where
+		 id  =  #{id}
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findByUiId" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		 id  =  #{id}
+	</select>
+ 
+
+	<!-- 批量删除用户 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where
+		 id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 获取总数 -->
+	<select id="getExperimentPpValCount" parameterType="String" resultType="pd">
+		select
+		count(1) ExperimentPpValCount
+		from
+		<include refid="tableName"></include>
+	</select>
+
+	<!-- FH HFTC( HFTC) -->
+</mapper>

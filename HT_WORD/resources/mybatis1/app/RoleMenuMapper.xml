@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RoleMenuMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		role_menu
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+			id,rid,pid
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	
+	 #{id}, #{rid}, #{pid}
+	
+	</sql>
+ 
+
+	<!-- 列出所有content.entity.className -->
+	<select id="listAllRoleMenu" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+	</select> 
+		<select id="SelectRoleMenus" parameterType="pd" resultType="com.fh.entity.app.RoleMenu">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="rid != null"> and rid = #{rid}</if>
+		<if test="pid != null"> and pid = #{pid}</if>
+	</select> 
+	<select id="queryRoleMenu" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="rid != null"> and rid = #{rid}</if>
+		<if test="pid != null"> and pid = #{pid}</if>
+	</select> 
+	
+	<!-- 新增会员 -->
+	<insert id="saveRoleMenu" parameterType="pd">
+		insert into
+		<include refid="tableName"></include>
+		(
+		rid,pid
+		) values (
+		 #{rid}, #{pid}
+		)
+	</insert>
+
+	<!-- 删除用户 -->
+	<delete id="deleteRoleMenu" parameterType="pd">
+		delete from
+		<include refid="tableName"></include> 
+		where  id  =  #{id}
+	</delete>
+ 
+ 	<!-- 删除用户 -->
+	<delete id="deleteRoleMenus" parameterType="pd">
+		delete from
+		<include refid="tableName"></include> 
+		where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="rid != null"> and rid = #{rid}</if>
+		<if test="pid != null"> and pid = #{pid}</if>
+	</delete>
+
+
+
+
+	<!-- 修改 -->
+	<update id="editRoleMenu" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+	rid=#{rid},
+	pid=#{pid}
+		where
+		 id  =  #{id}
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findByUiId" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		 id  =  #{id}
+	</select>
+ 
+
+	<!-- 批量删除用户 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where
+		 id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 获取总数 -->
+	<select id="getRoleMenuCount" parameterType="String" resultType="pd">
+		select
+		count(1) RoleMenuCount
+		from
+		<include refid="tableName"></include>
+	</select>
+
+	<!-- FH HFTC( HFTC) -->
+</mapper>

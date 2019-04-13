@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CompanyMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		company
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+			id,company,address,phone,mobile,relation,owner,creator,state,type,getawaysn
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	
+	 #{id}, #{company}, #{address}, #{phone}, #{mobile}, #{relation}, #{owner}, #{creator}, #{state}, #{type}, #{getawaysn}
+	
+	</sql>
+ 
+
+	<!-- 列出所有content.entity.className -->
+	<select id="listAllCompany" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+	</select> 
+		<select id="SelectCompanys" parameterType="pd" resultType="com.fh.entity.app.Company">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="company != null"> and company = #{company}</if>
+		<if test="address != null"> and address = #{address}</if>
+		<if test="phone != null"> and phone = #{phone}</if>
+		<if test="mobile != null"> and mobile = #{mobile}</if>
+		<if test="relation != null"> and relation = #{relation}</if>
+		<if test="owner != null"> and owner = #{owner}</if>
+		<if test="creator != null"> and creator = #{creator}</if>
+		<if test="state != null"> and state = #{state}</if>
+		<if test="type != null"> and type = #{type}</if>
+		<if test="getawaysn != null"> and getawaysn = #{getawaysn}</if>
+	</select> 
+	<select id="queryCompany" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="company != null"> and company = #{company}</if>
+		<if test="address != null"> and address = #{address}</if>
+		<if test="phone != null"> and phone = #{phone}</if>
+		<if test="mobile != null"> and mobile = #{mobile}</if>
+		<if test="relation != null"> and relation = #{relation}</if>
+		<if test="owner != null"> and owner = #{owner}</if>
+		<if test="creator != null"> and creator = #{creator}</if>
+		<if test="state != null"> and state = #{state}</if>
+		<if test="type != null"> and type = #{type}</if>
+		<if test="getawaysn != null"> and getawaysn = #{getawaysn}</if>
+	</select> 
+	
+	<!-- 新增会员 -->
+	<insert id="saveCompany" parameterType="pd">
+		insert into
+		<include refid="tableName"></include>
+		(
+		company,address,phone,mobile,relation,owner,creator,state,type,getawaysn
+		) values (
+		#{company}, #{address}, #{phone}, #{mobile}, #{relation}, #{owner}, #{creator}, #{state}, #{type}, #{getawaysn}
+		)
+	</insert>
+
+	<!-- 删除用户 -->
+	<delete id="deleteCompany" parameterType="pd">
+		delete from
+		<include refid="tableName"></include> 
+		where  id  =  #{id}
+	</delete>
+ 
+ 
+
+
+
+
+	<!-- 修改 -->
+	<update id="editCompany" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+	company=#{company},
+	address=#{address},
+	phone=#{phone},
+	mobile=#{mobile},
+	relation=#{relation},
+	owner=#{owner},
+	creator=#{creator},
+	state=#{state},
+	type=#{type},
+	getawaysn=#{getawaysn}
+		where
+		 id  =  #{id}
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findByUiId" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		 id  =  #{id}
+	</select>
+ 
+
+	<!-- 批量删除用户 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where
+		 id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 获取总数 -->
+	<select id="getCompanyCount" parameterType="String" resultType="pd">
+		select
+		count(1) CompanyCount
+		from
+		<include refid="tableName"></include>
+	</select>
+
+	<!-- FH HFTC( HFTC) -->
+</mapper>

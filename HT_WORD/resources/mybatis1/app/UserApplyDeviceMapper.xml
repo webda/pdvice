@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserApplyDeviceMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		user_apply_device
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+			id,uid,cdid,creatordate,reason,dealid,dealdate,state
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	
+	 #{id}, #{uid}, #{cdid}, #{creatordate}, #{reason}, #{dealid}, #{dealdate}, #{state}
+	
+	</sql>
+ 
+
+	<!-- 列出所有content.entity.className -->
+	<select id="listAllUserApplyDevice" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+	</select> 
+		<select id="SelectUserApplyDevices" parameterType="pd" resultType="com.fh.entity.app.UserApplyDevice">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="uid != null"> and uid = #{uid}</if>
+		<if test="cdid != null"> and cdid = #{cdid}</if>
+		<if test="creatordate != null"> and creatordate = #{creatordate}</if>
+		<if test="reason != null"> and reason = #{reason}</if>
+		<if test="dealid != null"> and dealid = #{dealid}</if>
+		<if test="dealdate != null"> and dealdate = #{dealdate}</if>
+		<if test="state != null"> and state = #{state}</if>
+	</select> 
+	<select id="queryUserApplyDevice" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="uid != null"> and uid = #{uid}</if>
+		<if test="cdid != null"> and cdid = #{cdid}</if>
+		<if test="creatordate != null"> and creatordate = #{creatordate}</if>
+		<if test="reason != null"> and reason = #{reason}</if>
+		<if test="dealid != null"> and dealid = #{dealid}</if>
+		<if test="dealdate != null"> and dealdate = #{dealdate}</if>
+		<if test="state != null"> and state = #{state}</if>
+	</select> 
+	
+	<!-- 新增会员 -->
+	<insert id="saveUserApplyDevice" parameterType="pd">
+		insert into
+		<include refid="tableName"></include>
+		(
+		uid,cdid,creatordate,reason,dealid,dealdate,state
+		) values (
+		#{uid}, #{cdid}, #{creatordate}, #{reason}, #{dealid}, #{dealdate}, #{state}
+		)
+	</insert>
+
+	<!-- 删除用户 -->
+	<delete id="deleteUserApplyDevice" parameterType="pd">
+		delete from
+		<include refid="tableName"></include> 
+		where  id  =  #{id}
+	</delete>
+ 
+ 
+
+
+
+
+	<!-- 修改 -->
+	<update id="editUserApplyDevice" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+	uid=#{uid},
+	cdid=#{cdid},
+	creatordate=#{creatordate},
+	reason=#{reason},
+	dealid=#{dealid},
+	dealdate=#{dealdate},
+	state=#{state}
+		where
+		 id  =  #{id}
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findByUiId" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		 id  =  #{id}
+	</select>
+ 
+
+	<!-- 批量删除用户 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where
+		 id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 获取总数 -->
+	<select id="getUserApplyDeviceCount" parameterType="String" resultType="pd">
+		select
+		count(1) UserApplyDeviceCount
+		from
+		<include refid="tableName"></include>
+	</select>
+
+	<!-- FH HFTC( HFTC) -->
+</mapper>

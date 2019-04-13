@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UsersMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		users
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+			id,cid,pid,name,pwd,realname,mobile,email,lastlogin,state,usertype,isdel,isneedchgpwd
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	
+	 #{id}, #{cid}, #{pid}, #{name}, #{pwd}, #{realname}, #{mobile}, #{email}, #{lastlogin}, #{state}, #{usertype}, #{isdel}, #{isneedchgpwd}
+	
+	</sql>
+ 
+
+	<!-- 列出所有content.entity.className -->
+	<select id="listAllUsers" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+	</select> 
+		<select id="SelectUserss" parameterType="pd" resultType="com.fh.entity.app.Users">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="cid != null"> and cid = #{cid}</if>
+		<if test="pid != null"> and pid = #{pid}</if>
+		<if test="name != null"> and name = #{name}</if>
+		<if test="pwd != null"> and pwd = #{pwd}</if>
+		<if test="realname != null"> and realname = #{realname}</if>
+		<if test="mobile != null"> and mobile = #{mobile}</if>
+		<if test="email != null"> and email = #{email}</if>
+		<if test="lastlogin != null"> and lastlogin = #{lastlogin}</if>
+		<if test="state != null"> and state = #{state}</if>
+		<if test="usertype != null"> and usertype = #{usertype}</if>
+		<if test="isdel != null"> and isdel = #{isdel}</if>
+		<if test="isneedchgpwd != null"> and isneedchgpwd = #{isneedchgpwd}</if>
+	</select> 
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include> f
+		where 1=1
+			<if test="pd.cid != null"> and cid = #{pd.cid}</if>
+		<if test="pd.pid != null"> and pid = #{pd.pid}</if>
+		<if test="pd.isdel != null"> and isdel = #{pd.isdel}</if> 
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+					name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					realname LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				)
+		</if>
+		
+	</select>
+	<select id="queryUsers" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="cid != null"> and cid = #{cid}</if>
+		<if test="pid != null"> and pid = #{pid}</if>
+		<if test="name != null"> and name = #{name}</if>
+		<if test="pwd != null"> and pwd = #{pwd}</if>
+		<if test="realname != null"> and realname = #{realname}</if>
+		<if test="mobile != null"> and mobile = #{mobile}</if>
+		<if test="email != null"> and email = #{email}</if>
+		<if test="lastlogin != null"> and lastlogin = #{lastlogin}</if>
+		<if test="state != null"> and state = #{state}</if>
+		<if test="usertype != null"> and usertype = #{usertype}</if>
+		<if test="isdel != null"> and isdel = #{isdel}</if>
+		<if test="isneedchgpwd != null"> and isneedchgpwd = #{isneedchgpwd}</if>
+	</select> 
+	
+	<!-- 新增会员 -->
+	<insert id="saveUsers" parameterType="pd"  useGeneratedKeys="true" keyProperty="id">
+		insert into
+		<include refid="tableName"></include>
+		(
+		cid,pid,name,pwd,realname,mobile,email,lastlogin,state,usertype,isdel,isneedchgpwd
+		) values (
+		#{cid}, #{pid}, #{name}, #{pwd}, #{realname}, #{mobile}, #{email}, #{lastlogin}, #{state}, #{usertype}, #{isdel}, #{isneedchgpwd}
+		)
+	</insert>
+
+	<!-- 删除用户 -->
+	<delete id="deleteUsers" parameterType="pd">
+		delete from
+		<include refid="tableName"></include> 
+		where  id  =  #{id}
+	</delete>
+ 
+ 
+
+
+
+
+	<!-- 修改 -->
+	<update id="editUsers" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+	cid=#{cid},
+	pid=#{pid},
+	name=#{name},
+	pwd=#{pwd},
+	realname=#{realname},
+	mobile=#{mobile},
+	email=#{email},
+	lastlogin=#{lastlogin},
+	state=#{state},
+	usertype=#{usertype},
+	isdel=#{isdel},
+	isneedchgpwd=#{isneedchgpwd}
+		where
+		 id  =  #{id}
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findByUiId" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		 id  =  #{id}
+	</select>
+ 	<!-- 通过ID获取数据 -->
+	<select id="getUserByNameAndPwd" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		 name  =  #{name} and pwd  =  #{pwd} 
+	</select>
+
+	<!-- 批量删除用户 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where
+		 id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 获取总数 -->
+	<select id="getUsersCount" parameterType="String" resultType="pd">
+		select
+		count(1) UsersCount
+		from
+		<include refid="tableName"></include>
+	</select>
+
+	<!-- FH HFTC( HFTC) -->
+</mapper>

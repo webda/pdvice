@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PropertiesMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		properties
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+			id,name,unit,icon,calc,tellflag
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	
+	 #{id}, #{name}, #{unit}, #{icon}, #{calc}, #{tellflag}
+	
+	</sql>
+ 
+
+	<!-- 列出所有content.entity.className -->
+	<select id="listAllProperties" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+	</select> 
+		<select id="SelectPropertiess" parameterType="pd" resultType="com.fh.entity.app.Properties">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="name != null"> and name = #{name}</if>
+		<if test="unit != null"> and unit = #{unit}</if>
+		<if test="icon != null"> and icon = #{icon}</if>
+		<if test="calc != null"> and calc = #{calc}</if>
+		<if test="tellflag != null"> and tellflag = #{tellflag}</if>
+	</select> 
+	<select id="queryProperties" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+			where 1=1
+		<if test="id != null"> and id = #{id}</if>
+		<if test="name != null"> and name = #{name}</if>
+		<if test="unit != null"> and unit = #{unit}</if>
+		<if test="icon != null"> and icon = #{icon}</if>
+		<if test="calc != null"> and calc = #{calc}</if>
+		<if test="tellflag != null"> and tellflag = #{tellflag}</if>
+	</select> 
+	
+	<!-- 新增会员 -->
+	<insert id="saveProperties" parameterType="pd">
+		insert into
+		<include refid="tableName"></include>
+		(
+		name,unit,icon,calc,tellflag
+		) values (
+		#{name}, #{unit}, #{icon}, #{calc}, #{tellflag}
+		)
+	</insert>
+
+	<!-- 删除用户 -->
+	<delete id="deleteProperties" parameterType="pd">
+		delete from
+		<include refid="tableName"></include> 
+		where  id  =  #{id}
+	</delete>
+ 
+ 
+
+
+
+
+	<!-- 修改 -->
+	<update id="editProperties" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+	name=#{name},
+	unit=#{unit},
+	icon=#{icon},
+	calc=#{calc},
+	tellflag=#{tellflag}
+		where
+		 id  =  #{id}
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findByUiId" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		 id  =  #{id}
+	</select>
+ 
+
+	<!-- 批量删除用户 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where
+		 id in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 获取总数 -->
+	<select id="getPropertiesCount" parameterType="String" resultType="pd">
+		select
+		count(1) PropertiesCount
+		from
+		<include refid="tableName"></include>
+	</select>
+
+	<!-- FH HFTC( HFTC) -->
+</mapper>
